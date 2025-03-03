@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_extra %}
+<link rel="stylesheet" href="{% static 'css/visualizar_admin.css' %}">
+{% endblock css_extra %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Cadastrar Novo Administrador</h2>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+    
+    <form method="post" class="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-add">Cadastrar</button>
+    </form>
+</div>
+{% endblock %}
