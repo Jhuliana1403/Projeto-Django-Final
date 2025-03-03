@@ -40,9 +40,14 @@ def cadastrar_admin(request):
     if request.method == 'POST':
         form = AdminCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Novo administrador cadastrado com sucesso!")
-            return redirect('cadastrar_admin')  # Redireciona para a mesma página ou outra
+             # Verificar se o e-mail já está cadastrado
+            email = form.cleaned_data['email'].lower()
+            if User.objects.filter(email=email).exists():
+                messages.error(request, "Este e-mail já está cadastrado como administrador.")
+            else:
+                form.save()
+                messages.success(request, "Novo administrador cadastrado com sucesso!")
+                return redirect('cadastrar_admin')  # Redireciona para a mesma página ou outra
     else:
         form = AdminCreationForm()
 
@@ -64,6 +69,11 @@ def editar_admin(request):
         user.email = email
         user.first_name = first_name
         user.last_name = last_name
+
+         # Verifica se o e-mail fornecido já está cadastrado em outro usuário
+        if User.objects.filter(email=email).exclude(id=user.id).exists():
+            messages.error(request, "Este e-mail já está cadastrado em outro usuário.")
+            return redirect('editar_admin')  # Redireciona para a página de edição novamente com a mensagem de erro
 
         # Verifica se foi fornecida uma nova senha
         if password:

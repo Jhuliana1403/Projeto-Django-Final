@@ -37,17 +37,42 @@
     <symbol id="sair" width="16" height="16" fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16">
         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
     </symbol>
+    <symbol id="people-circle" viewBox="0 0 16 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+    </symbol>
 </svg>
 
 <body>
 <div class="container-sidebar">
-    <div class="sidebar">
-           <img src="{% static 'img/logo.png' %}" alt="Logo" width="200" height="80" class="logo">
+    <!-- Botão de Menu (visível apenas em dispositivos pequenos) -->
+    <button id="menu-btn" class="menu-btn">&#9776;</button>
+    <!-- Sidebar --> 
+    <div id="sidebar" class="sidebar">
+        <button id="close-btn" class="menu-btn">&#9776;</button>
+        <img src="{% static 'img/logo.png' %}" alt="Logo" width="200" height="80" class="logo">
+        
         <hr>
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{% static "img/usuario.png" %}" alt="" width="50" height="50" class="rounded-circle me-2">
-            <strong>Usuário</strong>
-        </a>
+            <a href="#" class="nav-link text-white" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 10px;">
+                <img src="{% static "img/usuario.png" %}" alt="" width="50" height="50" class="rounded-circle">
+                <strong>{{ request.user.first_name }}</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li>
+                    <a href="{% url 'visualizar_admin' %}" class="dropdown-item">
+                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                        Perfil
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a href="{% url "logout" %}" class="dropdown-item"> 
+                        {% comment %} O link do sair {% endcomment %}
+                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#sair"/></svg>
+                        Sair
+                    </a>
+                </li>
+            </ul>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
@@ -105,23 +130,17 @@
                 </a>
             </li>
             <li>
-                <a href="{% url "visualizar_admin" %}" class="nav-link text-white">
+                <a href="{% url "cadastrar_admin" %}" class="nav-link text-white">
                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#admin"/></svg>
                     Novo Administrador
                 </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white"> 
-                    {% comment %} O link do sair {% endcomment %}
-                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#sair"/></svg>
-                </a>
-            </li>
+            </li>            
         </ul>
         <button id="theme-toggle">
-           <svg id="theme-icon" width="24" height="24" fill="currentColor"></svg>
+        <svg id="theme-icon" width="24" height="24" fill="currentColor"></svg>
         </button>
     </div>
-</div>
-</div>
-<div class="b-example-divider b-example-vr"></div>
+    <div class="b-example-divider b-example-vr"></div>
+    </div>
+
 </body>
