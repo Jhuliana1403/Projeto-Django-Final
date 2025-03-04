@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="title">Visualizar Dados do Usuário</h2>
+    <h2 class="title">Dados Gerais do Perfil</h2>
 
     {% if messages %}
     <div class="messages">
@@ -18,21 +18,19 @@
 
     <div class="table-container">
         <table class="table">
-            <thead>
-                <tr>
-                    <th>Usuário</th>
-                    <th>Email</th>
-                    <th>Primeiro Nome</th>
+            <thead class="max-table">
+                <tr>                    
+                    <th>Nome</th>
                     <th>Sobrenome</th>
-                    <th>Ações</th>
+                    <th>Email</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
+            <tbody class="max-table">
+                <tr>                    
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
                     <td>
                         <a href="{% url 'editar_admin' %}" title="Editar">
                             <i class="bi bi-pencil"></i>
@@ -40,6 +38,26 @@
                     </td>
                 </tr>
             </tbody>
+            <tbody class="min-table">                
+                <tr>
+                    <th>Nome</th>
+                    <td> {{ user.first_name }} </td>
+                </tr>
+                <tr>
+                    <th>Sobrenome</th>
+                    <td> {{ user.last_name }} </td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td> {{ user.email }} </td>
+                </tr>
+                <tr>
+                    <th>Ação</th>
+                    <td><a href="{% url 'editar_admin' %}" title="Editar"><i class="bi bi-pencil"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+
         </table>
     </div>
 

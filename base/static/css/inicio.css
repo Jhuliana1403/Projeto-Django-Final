@@ -255,6 +255,29 @@ li {
   background-color: #f2f2f2;
 }
 
+/* Ocultar a versão para telas pequenas e mostrar a versão para telas grandes */
+.max-table {
+  display: table-row-group;
+}
+
+/* Mostrar a versão para telas grandes e esconder para telas pequenas */
+.min-table {
+  display: none;
+}
+
+/* Estilo para telas menores que 768px */
+@media (max-width: 768px) {
+    /* Esconde a versão para telas grandes e mostra a versão para telas pequenas */
+    .max-table {
+        display: none;
+    }
+
+    .min-table {
+        display: table-row-group;
+    }
+}
+
+
 /* Estilização dos botões */
 .btn {
   padding: 8px 12px;

@@ -50,9 +50,15 @@
     background-color: #f1f1f1;
     cursor: pointer;
     position: fixed; /* Fixando o botão na tela */
-    top: 20px; /* Adicionando espaço do topo */
-    left: 20px; /* Adicionando espaço da esquerda */
+    top: 10px; /* Adicionando espaço do topo */
+    left: 10px; /* Adicionando espaço da esquerda */
   }
+
+  /* Caso queira um efeito de hover no botão de fechar */
+  #menu-btn:hover {
+    background-color: #4b48482f
+  }
+
   
   /* Estilo para o botão de fechar */
   #close-btn {
@@ -62,14 +68,14 @@
     font-size: 30px;
     cursor: pointer;
     position: absolute; /* Fixando o botão na tela */
-    top: 20px; /* Adicionando espaço do topo */
-    left: 20px; /* Adicionando espaço da esquerda */
+    top: 10px; /* Adicionando espaço do topo */
+    left: 10px; /* Adicionando espaço da esquerda */
     z-index: 1200; /* Garante que o botão fique sobre o conteúdo */
   }
 
   /* Caso queira um efeito de hover no botão de fechar */
   #close-btn:hover {
-    color: #f0f0f0; /* Altere a cor quando o mouse passar sobre */
+    background-color: #4b48482f
   }
 
   /* Responsividade para dispositivos pequenos */
