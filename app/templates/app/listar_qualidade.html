@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="title">Qualidade do Leite</h2>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+    {% if qualidade %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produtor</th>
+                    <th>Coleta</th>
+                    <th>Gordura (%)</th>
+                    <th>Proteína (%)</th>
+                    <th>Contagem Bacteriana</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in qualidade %}
+                    <tr>
+                        <td>{{ q.produtor.nome }}</td>
+                        <td>{{ q.coleta.quantidade_litros|default:"Não informado" }}</td>
+                        <td>{{ q.gordura }}</td>
+                        <td>{{ q.proteina }}</td>
+                        <td>{{ q.contagem_bacteriana }}</td>
+                        <td>
+                            <a href="{% url 'alternar_status_qualidade' q.id %}" class="status-toggle">
+                                {% if q.status == "Aprovado" %}
+                                    <span class="status-indicator status-active"></span> Aprovado
+                                {% else %}
+                                    <span class="status-indicator status-inactive"></span> Reprovado
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'editar_qualidade' q.id %}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'excluir_qualidade' q.id %}" onclick="return confirm('Tem certeza que deseja excluir?')">
+                                <i class="bi bi-trash"></i>
+                            </a> 
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum registro de qualidade do leite encontrado.</p>
+    {% endif %}
+    
+    <a href="{% url 'adicionar_qualidade' %}" class="btn btn-add">+ Adicionar Qualidade</a>
+</div>
+{% endblock %}
