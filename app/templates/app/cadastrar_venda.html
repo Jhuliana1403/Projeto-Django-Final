@@ -29,6 +29,9 @@
                 {% endfor %}
             </select>
 
+            <label for="data_venda">Data:</label>
+            <input type="date" id="data_venda" name="data_venda" class="form-control input-large" placeholder="Digite a data" value="{{ request.POST.data_venda }}">
+            
             <label for="quantidade_litros">Quantidade de Litros:</label>
             <input type="number" id="quantidade_litros" name="quantidade_litros" class="form-control input-large" placeholder="Digite a quantidade de litros" value="{{ request.POST.quantidade_litros }}">
 

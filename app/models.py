@@ -21,7 +21,7 @@ class Cliente(models.Model):
 
 class Coleta(models.Model):
     produtor = models.ForeignKey('Produtor', on_delete=models.CASCADE)
-    data = models.DateField()  # Agora o usuário pode escolher a data no formulário
+    data = models.DateField()  
     quantidade_litros = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
@@ -76,7 +76,7 @@ class Funcionario(models.Model):
 class Venda(models.Model):
     imagem = models.ImageField(upload_to='vendas/', blank=True, null=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    data_venda = models.DateTimeField(auto_now_add=True)
+    data_venda = models.DateField()
     quantidade_litros = models.DecimalField(max_digits=10, decimal_places=2)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2)
 

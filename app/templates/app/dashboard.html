@@ -3,33 +3,35 @@
 
 {% block content %}
 <div class="container-fluid">
-    <h2 class="text-center mt-4">Fechamento Financeiro - {{ mes_atual }} de {{ ano_atual }}</h2>
+    <h2 class="text-center mt-5 mb-4">Fechamento Financeiro - {{ ano_atual }}</h2>
 
-    <div class="row mt-4">
-        <!-- Resumo do Mês -->
-        <div class="col-md-3">
+    <div class="row mt-4 gap-3 justify-content-center">
+        <!-- Resumo Anual -->
+        <div class="col-md-3 mb-3">
             <div class="card shadow p-3 bg-info text-white">
                 <h4 class="text-center">Resumo Anual</h4>
                 <p><strong>Salários:</strong> R$ {{ total_salarios|floatformat:2 }}</p>
                 <p><strong>Pagamentos:</strong> R$ {{ total_pagamentos|floatformat:2 }}</p>
+                <p><strong>Vendas:</strong> R$ {{ total_vendas|floatformat:2 }}</p>
             </div>
         </div>
 
         <!-- Gráfico Comparativo Financeiro -->
-        <div class="col-md-7">
+        <div class="col-md-7 mb-3">
             <div class="card shadow p-3">
                 <h5 class="text-center">Comparativo Financeiro</h5>
                 <canvas id="graficoFinanceiro"
                     data-salarios="{{ total_salarios }}"
-                    data-pagamentos="{{ total_pagamentos }}">
+                    data-pagamentos="{{ total_pagamentos }}"
+                    data-vendas="{{ total_vendas }}">
                 </canvas>
             </div>
         </div>
     </div>
 
-    <div class="row mt-4">
+    <div class="row mt-4 gap-3 justify-content-center">
         <!-- Gráfico de Pagamentos Mensais -->
-        <div class="col-md-5">
+        <div class="col-md-5 mb-3">
             <div class="card shadow p-3">
                 <h5 class="text-center">Pagamentos Mensais</h5>
                 <canvas id="graficoMensal"
@@ -40,7 +42,7 @@
         </div>
 
         <!-- Gráfico de Salários por Funcionário -->
-        <div class="col-md-5">
+        <div class="col-md-5 mb-3">
             <div class="card shadow p-3">
                 <h5 class="text-center">Salários por Funcionário</h5>
                 <canvas id="graficoSalarios"
@@ -49,6 +51,28 @@
                 </canvas>
             </div>
         </div>
+    </div>
+
+    <div class="row mt-4 gap-3 justify-content-center">
+        <!-- Gráfico de Vendas Mensais -->
+        <div class="col-md-7 mb-3">
+            <div class="card shadow p-3">
+                <h5 class="text-center">Vendas Mensais</h5>
+                <canvas id="graficoVendas"
+                    data-meses="{{ meses|join:',' }}"
+                    data-valores="{{ valores_vendas|join:',' }}">
+                </canvas>
+            </div>
+        </div>
+    
+        <div class="col-md-3 mb-3">
+            <div class="card shadow p-3 bg-info text-white">
+                <h4 class="text-center">Valor Mensal</h4>
+                <p><strong>Total de Vendas:</strong> R$ {{ total_vendas_mes|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+    
     </div>
 </div>
 {% endblock %}

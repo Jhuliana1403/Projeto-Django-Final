@@ -78,6 +78,14 @@
     background-color: #4b48482f
   }
 
+  [data-bs-theme="dark"] #menu-btn {
+    background-color: #3b3b3b;
+  }
+
+  [data-bs-theme="dark"] #menu-btn:hover {
+    background-color: #202020;
+  }
+
   /* Responsividade para dispositivos pequenos */
   @media (max-width: 768px) {
     .sidebar {
