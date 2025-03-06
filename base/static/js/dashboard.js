@@ -4,17 +4,20 @@ document.addEventListener("DOMContentLoaded", function () {
     new Chart(ctxFinanceiro, {
         type: "bar",
         data: {
-            labels: ["Salários", "Pagamentos"],
+            labels: ["Salários", "Pagamentos", "Vendas"],
             datasets: [{
-                label: "Valores em R$",
                 data: [
                     parseFloat(document.getElementById("graficoFinanceiro").dataset.salarios),
-                    parseFloat(document.getElementById("graficoFinanceiro").dataset.pagamentos)
+                    parseFloat(document.getElementById("graficoFinanceiro").dataset.pagamentos),
+                    parseFloat(document.getElementById("graficoFinanceiro").dataset.vendas)
                 ],
-                backgroundColor: ["#3498db", "#e74c3c"]
+                backgroundColor: ["#3498db", "#e74c3c", "#f1c40f"]
             }]
         },
-        options: { responsive: true }
+        options: { 
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
     });
 
     // Gráfico de Pagamentos Mensais
@@ -24,14 +27,37 @@ document.addEventListener("DOMContentLoaded", function () {
         data: {
             labels: document.getElementById("graficoMensal").dataset.meses.split(","),
             datasets: [{
-                label: "Pagamentos Mensais (R$)",
+                label: "Pagamentos Mensais",
                 data: document.getElementById("graficoMensal").dataset.valores.split(",").map(parseFloat),
                 backgroundColor: "#f1c40f",
                 borderColor: "#f39c12",
                 fill: false
             }]
         },
-        options: { responsive: true }
+        options: { 
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Gráfico de Vendas Mensais (Novo gráfico de linhas para vendas)
+    var ctxVendas = document.getElementById("graficoVendas").getContext("2d");
+    new Chart(ctxVendas, {
+        type: "line",
+        data: {
+            labels: document.getElementById("graficoVendas").dataset.meses.split(","),
+            datasets: [{
+                label: "Vendas Mensais",
+                data: document.getElementById("graficoVendas").dataset.valores.split(",").map(parseFloat),
+                backgroundColor: "#2ecc71", // Cor do fundo da linha
+                borderColor: "#27ae60",     // Cor da linha
+                fill: false
+            }]
+        },
+        options: { 
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
     });
 
     // Gráfico de Salários por Funcionário
@@ -41,11 +67,13 @@ document.addEventListener("DOMContentLoaded", function () {
         data: {
             labels: document.getElementById("graficoSalarios").dataset.funcionarios.split(","),
             datasets: [{
-                label: "Salários dos Funcionários (R$)",
                 data: document.getElementById("graficoSalarios").dataset.salarios.split(",").map(parseFloat),
                 backgroundColor: "#2ecc71"
             }]
         },
-        options: { responsive: true }
+        options: { 
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
     });
 });

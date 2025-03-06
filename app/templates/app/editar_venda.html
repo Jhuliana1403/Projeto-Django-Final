@@ -30,6 +30,10 @@
                 {% endfor %}
             </select>
 
+            <label>Data:</label>
+            <input type="date" name="data_venda" class="form-control" 
+                value="{{ request.POST.data_venda|default:venda.data_venda }}">
+
             <label>Quantidade de Litros:</label>
             <input type="number" name="quantidade_litros" class="form-control" 
                 value="{{ request.POST.quantidade_litros|default:venda.quantidade_litros }}">

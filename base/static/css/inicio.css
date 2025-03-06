@@ -348,6 +348,10 @@ li {
 }
 
 /*Gráfico*/
+.container-fluid{
+  max-width: 100%;
+}
+
 /* Ajuste do dashboard */
 .dashboard {
   width: 80vw;  /* 80% da largura da tela */
@@ -830,5 +834,9 @@ li {
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
+  }
+  .dashboard{
+    margin: auto;
+    margin-top: 5px;
   }
 }

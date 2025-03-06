@@ -606,15 +606,17 @@ def cadastrar_venda(request):
     if request.method == "POST":
         # Obtendo os dados do formulário
         cliente_id = request.POST.get('cliente')
+        data_venda = request.POST.get('data_venda')
         quantidade_litros = request.POST.get('quantidade_litros')
         valor_total = request.POST.get('valor_total')
 
         # Verificação de campos vazios
-        if not cliente_id or not quantidade_litros or not valor_total:
+        if not cliente_id or not data_venda or not quantidade_litros or not valor_total:
             messages.error(request, "Todos os campos são obrigatórios. Por favor, preencha todos os campos.")
             return render(request, 'app/cadastrar_venda.html', {
                 'clientes': Cliente.objects.all(),
                 'cliente_id': cliente_id,
+                'data_venda': data_venda,
                 'quantidade_litros': quantidade_litros,
                 'valor_total': valor_total,
             })
@@ -627,6 +629,7 @@ def cadastrar_venda(request):
             return render(request, 'app/cadastrar_venda.html', {
                 'clientes': Cliente.objects.all(),
                 'cliente_id': cliente_id,
+                'data_venda':data_venda,
                 'quantidade_litros': quantidade_litros,
                 'valor_total': valor_total,
             })
@@ -642,6 +645,7 @@ def cadastrar_venda(request):
                 return render(request, 'app/cadastrar_venda.html', {
                     'clientes': Cliente.objects.all(),
                     'cliente_id': cliente_id,
+                    'data_venda':data_venda,
                     'quantidade_litros': quantidade_litros,
                     'valor_total': valor_total,
                 })
@@ -651,6 +655,7 @@ def cadastrar_venda(request):
             return render(request, 'app/cadastrar_venda.html', {
                 'clientes': Cliente.objects.all(),
                 'cliente_id': cliente_id,
+                'data_venda':data_venda,
                 'quantidade_litros': quantidade_litros,
                 'valor_total': valor_total,
             })
@@ -658,6 +663,7 @@ def cadastrar_venda(request):
         # Criando a venda
         Venda.objects.create(
             cliente=cliente,
+            data_venda=data_venda,
             quantidade_litros=quantidade_litros,
             valor_total=valor_total
         )
@@ -675,11 +681,12 @@ def editar_venda(request, venda_id):
     if request.method == "POST":
         # Obter os dados do formulário
         cliente_id = request.POST.get('cliente')
+        data_venda = request.POST.get('data_venda')
         quantidade_litros = request.POST.get('quantidade_litros')
         valor_total = request.POST.get('valor_total')
 
         # Validação dos campos
-        if not cliente_id or not quantidade_litros or not valor_total:
+        if not cliente_id or not quantidade_litros or not valor_total or not data_venda:
             messages.error(request, "Todos os campos são obrigatórios.")
             return render(request, 'app/editar_venda.html', {
                 'venda': venda,
@@ -698,6 +705,7 @@ def editar_venda(request, venda_id):
 
         # Atualizar a venda com os dados válidos
         venda.cliente_id = cliente_id
+        venda.data_venda = data_venda
         venda.quantidade_litros = quantidade_litros
         venda.valor_total = valor_total
         venda.save()
@@ -723,15 +731,22 @@ def dashboard(request):
     mes_atual = hoje.strftime("%B")
     ano_atual = hoje.year
 
+    # Cálculo dos totais
     total_salarios = Funcionario.objects.aggregate(total=Sum('salario'))['total'] or 0
     total_pagamentos = Pagamento.objects.aggregate(total=Sum('valor'))['total'] or 0
+    total_vendas = Venda.objects.aggregate(total=Sum('valor_total'))['total'] or 0 
 
     # Dados para o gráfico de salários
     funcionarios = Funcionario.objects.values('nome', 'salario')
     nomes_funcionarios = [f['nome'] for f in funcionarios]
     salarios_funcionarios = [f['salario'] for f in funcionarios]
 
-    # Pagamentos Mensais
+    total_vendas_mes = Venda.objects.filter(
+        data_venda__year=ano_atual, 
+        data_venda__month=hoje.month
+    ).aggregate(total=Sum('valor_total'))['total'] or 0
+
+    # Pagamentos Mensais    
     pagamentos_mensais = (
         Pagamento.objects
         .annotate(mes=TruncMonth('data_pagamento'))
@@ -739,19 +754,37 @@ def dashboard(request):
         .annotate(total=Sum('valor'))
         .order_by('mes')
     )
-    meses = [p['mes'].strftime("%b/%Y") if p['mes'] else "Data Indefinida" for p in pagamentos_mensais]
+    meses = [
+        p['mes'].strftime("%b/%Y") if p['mes'] else "Data Indefinida"
+        for p in pagamentos_mensais
+    ]
     valores_mensais = [p['total'] for p in pagamentos_mensais]
+
+    # Vendas Mensais
+    vendas_mensais = (
+        Venda.objects
+        .annotate(mes=TruncMonth('data_venda'))
+        .values('mes')
+        .annotate(total=Sum('valor_total'))
+        .order_by('mes')
+    )
+    meses = [v['mes'].strftime("%b/%Y") if v['mes'] else "Data Indefinida" for v in vendas_mensais]
+    valores_vendas = [v['total'] for v in vendas_mensais]
 
     return render(request, 'app/dashboard.html', {
         'mes_atual': mes_atual,
         'ano_atual': ano_atual,
         'total_salarios': total_salarios,
         'total_pagamentos': total_pagamentos,
-        'meses': meses,
+        'total_vendas': total_vendas, 
         'valores_mensais': valores_mensais,
         'nomes_funcionarios': nomes_funcionarios,
-        'salarios_funcionarios': salarios_funcionarios
+        'salarios_funcionarios': salarios_funcionarios,
+        'total_vendas_mes': total_vendas_mes,  # Só vendas mensais
+        'meses': meses,
+        'valores_vendas': valores_vendas,
     })
+
 
 @login_required(login_url='login_index')
 def listar_transporte(request):
