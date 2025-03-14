@@ -1,0 +1,842 @@
+html, body {
+  font-family: Arial, sans-serif;
+  transition: background 0.3s, color 0.3s;
+  height: 100vh; /* Garante que o body ocupe toda a altura da tela */
+  width: 100vw; /* Ocupa toda a largura da tela */
+  margin: 0;
+  display: flex;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  
+  .b-example-divider {
+    width: 100%;
+    height: 3rem;
+  }
+  
+  .b-example-vr {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 100vh;
+  }
+  
+  .bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+  }
+  
+  .nav-scroller {
+    position: relative;
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+  }
+  
+  .nav-scroller .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+
+  
+  .bd-mode-toggle {
+    z-index: 1500;
+  }
+  
+  .bd-mode-toggle .dropdown-menu .active .bi {
+    display: block !important;
+  }
+  
+  /* Adicionando hover em links */
+  .nav-link {
+    color: #222222;
+  }
+  
+  .nav-link:hover {
+    background-color: #218838; /* Hover verde para os links */
+    color: #222222;
+  }
+  
+  .nav-link.active {
+    background-color: #28a745; /* Cor ativa do link */
+    color: #222222;
+  }
+
+/* Remove o destaque azul no hover do botão */
+.dropdown-item:focus,
+.dropdown-item:hover {
+    background-color: transparent; /* Cor de fundo do hover */
+    color: #000; /* Cor do texto do hover */
+}
+
+/* Remove a cor de fundo ativa (azul fixo) no botão ativo */
+.dropdown-item.active {
+    background-color: transparent; /* Cor de fundo quando ativo */
+    color: #000; /* Cor do texto ativo */
+}
+
+/* Adicionando um hover com cor personalizada */
+.dropdown-item:hover {
+    background-color: #cfcfcf; /* Cor personalizada no hover */
+    color: #000000; /* Cor do texto no hover */
+}
+
+
+
+.btn-bd-primary {
+  background: linear-gradient(135deg, #06ef39, #08692f);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-bd-primary:hover {
+  background: linear-gradient(135deg, #08692f, #06ef39);
+  transform: scale(1.05);
+}
+
+li {
+  display: flex;
+  width: 100%;
+}
+
+/*Estilização do formulário*/
+/* Container principal */
+.form-container {
+  width: 800px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-left: 150px;  
+}
+
+/* Título do formulário */
+.form-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 100px;
+  color: #333;
+}
+
+/* Grupo do input */
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+/* Rótulo do campo */
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Campo de entrada */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  height: auto;
+}
+
+.form-control:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  outline: none;
+}
+
+/* Botão de envio */
+.btn-submit {
+  width: 50%;
+  padding: 10px;
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, #218838, #28a745);
+  transform: scale(1.05);
+}
+
+.messages {
+  position: fixed;
+  top: 10px;
+  left: 56%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  z-index: 1000;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Estilo para mensagens de erro */
+.alert-error {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+/* Estilo para mensagens de sucesso */
+.alert-success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.container {
+  max-width: auto;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: auto; 
+  align-items: stretch; 
+  text-align: center;
+}
+
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.table th {
+  background-color: #28a745;
+  color: white;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Ocultar a versão para telas pequenas e mostrar a versão para telas grandes */
+.max-table {
+  display: table-row-group;
+}
+
+/* Mostrar a versão para telas grandes e esconder para telas pequenas */
+.min-table {
+  display: none;
+}
+
+/* Estilo para telas menores que 768px */
+@media (max-width: 768px) {
+    /* Esconde a versão para telas grandes e mostra a versão para telas pequenas */
+    .max-table {
+        display: none;
+    }
+
+    .min-table {
+        display: table-row-group;
+    }
+}
+
+
+/* Estilização dos botões */
+.btn {
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-edit {
+  background: #ffc107;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #e0a800;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c82333;
+}
+
+.btn-add {
+  display: block;
+  width: max-content;
+  margin: 20px auto;
+  background: #28a745;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+}
+
+.btn-add:hover {
+  background: #218838;
+}
+
+/* Mensagem de nenhum produto encontrado */
+.no-products {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+}
+
+/*Tabelas*/
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-active {
+  background-color: green;
+}
+
+.status-inactive {
+  background-color: red;
+}
+
+.status-toggle {
+  text-decoration: none;
+  color: inherit;
+}
+
+/*Gráfico*/
+.container-fluid{
+  max-width: 100%;
+}
+
+/* Ajuste do dashboard */
+.dashboard {
+  width: 80vw;  /* 80% da largura da tela */
+  height: 90vh; /* 90% da altura da tela */
+  margin: auto; /* Centraliza na tela */
+  padding: 20px;
+  background: #f4f4f4; /* Cor de fundo */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ajuste dos gráficos dentro do dashboard */
+.dashboard canvas {
+  width: 100% !important;  /* Ajusta os gráficos à largura do dashboard */
+  height: auto !important; /* Mantém a proporção */
+  max-height: 400px; /* Define um tamanho máximo */
+}
+
+
+
+/* Sidebar */
+/* Modo Claro */
+
+/*Botão do dark e light mode*/
+#theme-toggle {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+#theme-icon {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.light-mode {
+  background: white;
+  color: black;
+}
+
+.dark-mode {
+  background: #121212;
+  color: white;
+}
+
+.theme-toggle {
+  display: flex;
+  gap: 10px;
+  margin: 20px;
+}
+[data-bs-theme="light"] {
+  background: #ffffff;
+  color: #121212;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Modo Escuro */
+[data-bs-theme="dark"] {
+  background: #181818;
+  color: #e0e0e0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Sidebar */
+[data-bs-theme="dark"] .sidebar {
+  background: #222;
+  color: #f0f0f0;
+}
+
+/* Links */
+[data-bs-theme="dark"] .nav-link {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .nav-link:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .nav-link.active {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Botões */
+[data-bs-theme="dark"] .btn-bd-primary {
+  background: linear-gradient(135deg, #0f9d58, #034d23);
+  color: #ffffff;
+}
+
+[data-bs-theme="dark"] .btn-bd-primary:hover {
+  background: linear-gradient(135deg, #034d23, #0f9d58);
+}
+
+[data-bs-theme="dark"] .btn {
+  border: 1px solid #444;
+}
+
+[data-bs-theme="dark"] .btn-edit {
+  background: #ffb700;
+  color: #121212;
+}
+
+[data-bs-theme="dark"] .btn-edit:hover {
+  background: #e0a800;
+}
+
+[data-bs-theme="dark"] .btn-delete {
+  background: #ff4444;
+  color: white;
+}
+
+[data-bs-theme="dark"] .btn-delete:hover {
+  background: #cc0000;
+}
+
+/* Formulários */
+[data-bs-theme="dark"] .form-container {
+  background: #222;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .form-title {
+  color: #ddd;
+}
+
+[data-bs-theme="dark"] .form-group label {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .form-control {
+  background: #333;
+  border: 1px solid #555;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+  border-color: #0f9d58;
+  box-shadow: 0 0 5px rgba(15, 157, 88, 0.5);
+}
+
+[data-bs-theme="dark"] .btn-submit {
+  background: linear-gradient(135deg, #0f9d58, #066c37);
+}
+
+[data-bs-theme="dark"] .btn-submit:hover {
+  background: linear-gradient(135deg, #066c37, #0f9d58);
+}
+
+/* Tabelas */
+[data-bs-theme="dark"] .table th {
+  background-color: #066c37;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(even) {
+  background-color: #242424;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(odd) {
+  background-color: #1c1c1c;
+}
+
+/* Indicadores de Status */
+[data-bs-theme="dark"] .status-active {
+  background-color: #0f9d58;
+}
+
+[data-bs-theme="dark"] .status-inactive {
+  background-color: #ff4444;
+}
+
+
+/* Modo Claro */
+[data-bs-theme="light"] {
+  background: #ffffff;
+  color: #121212;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Modo Escuro */
+[data-bs-theme="dark"] {
+  background: #181818;
+  color: #e0e0e0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Sidebar */
+[data-bs-theme="dark"] .sidebar {
+  background: #222;
+  color: #f0f0f0;
+}
+
+/* Links */
+[data-bs-theme="dark"] .nav-link {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .nav-link:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .nav-link.active {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Botões */
+[data-bs-theme="dark"] .btn-bd-primary {
+  background: linear-gradient(135deg, #0f9d58, #034d23);
+  color: #ffffff;
+}
+
+[data-bs-theme="dark"] .btn-bd-primary:hover {
+  background: linear-gradient(135deg, #034d23, #0f9d58);
+}
+
+[data-bs-theme="dark"] .btn {
+  border: 1px solid #444;
+}
+
+[data-bs-theme="dark"] .btn-edit {
+  background: #ffb700;
+  color: #121212;
+}
+
+[data-bs-theme="dark"] .btn-edit:hover {
+  background: #e0a800;
+}
+
+[data-bs-theme="dark"] .btn-delete {
+  background: #ff4444;
+  color: white;
+}
+
+[data-bs-theme="dark"] .btn-delete:hover {
+  background: #cc0000;
+}
+
+/* Formulários */
+[data-bs-theme="dark"] .form-container {
+  background: #222;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .form-title {
+  color: #ddd;
+}
+
+[data-bs-theme="dark"] .form-group label {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .form-control {
+  background: #333;
+  border: 1px solid #555;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+  border-color: #0f9d58;
+  box-shadow: 0 0 5px rgba(15, 157, 88, 0.5);
+}
+
+[data-bs-theme="dark"] .btn-submit {
+  background: linear-gradient(135deg, #0f9d58, #066c37);
+}
+
+[data-bs-theme="dark"] .btn-submit:hover {
+  background: linear-gradient(135deg, #066c37, #0f9d58);
+}
+
+/* Tabelas */
+[data-bs-theme="dark"] .table th {
+  background-color: #066c37;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(even) {
+  background-color: #242424;
+}
+
+[data-bs-theme="dark"] .table tr:nth-child(odd) {
+  background-color: #1c1c1c;
+}
+
+/* Indicadores de Status */
+[data-bs-theme="dark"] .status-active {
+  background-color: #0f9d58;
+}
+
+[data-bs-theme="dark"] .status-inactive {
+  background-color: #ff4444;
+}
+
+
+/* Modo Escuro para os cartões de funcionários */
+[data-bs-theme="dark"] .funcionario-card {
+  background: #252525;
+  box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+}
+
+[data-bs-theme="dark"] .funcionario-img {
+  border: 3px solid #777;
+}
+
+[data-bs-theme="dark"] .btn-add {
+  background: #0b572d;
+}
+
+[data-bs-theme="dark"] .container {
+  background: #121212;
+}
+
+/* Modo Escuro para o Dashboard */
+[data-bs-theme="dark"] .dashboard {
+  background: #1e1e1e; /* Cinza escuro para um visual sofisticado */
+  color: #e0e0e0; /* Texto mais suave para legibilidade */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* Sombra sutil para destacar */
+  border-radius: 10px; /* Bordas arredondadas para suavizar o design */
+}
+
+/* Elementos internos */
+[data-bs-theme="dark"] .dashboard h1,
+[data-bs-theme="dark"] .dashboard h2,
+[data-bs-theme="dark"] .dashboard h3 {
+  color: #ffffff; /* Destaca os títulos */
+}
+
+[data-bs-theme="dark"] .dashboard p {
+  color: #cccccc; /* Texto equilibrado */
+}
+
+/* Ajuste para botões dentro do dashboard */
+[data-bs-theme="dark"] .dashboard .btn {
+  background: linear-gradient(135deg, #0f9d58, #066c37);
+  color: #fff;
+  border: none;
+}
+
+[data-bs-theme="dark"] .dashboard .btn:hover {
+  background: linear-gradient(135deg, #066c37, #0f9d58);
+  box-shadow: 0px 2px 8px rgba(15, 157, 88, 0.4);
+}
+
+/* Layout de Funcionários */
+.funcionarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.funcionario-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.funcionario-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+}
+
+.funcionario-info h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.funcionario-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.status-toggle {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-active {
+  background-color: green;
+}
+
+.status-inactive {
+  background-color: red;
+}
+
+.funcionario-acoes {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.funcionarios-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.funcionario-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.funcionario-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+}
+
+.funcionario-info h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.funcionario-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.status-toggle {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-active {
+  background-color: green;
+}
+
+.status-inactive {
+  background-color: red;
+}
+
+.funcionario-acoes {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+  .dashboard{
+    margin: auto;
+    margin-top: 5px;
+  }
+}
