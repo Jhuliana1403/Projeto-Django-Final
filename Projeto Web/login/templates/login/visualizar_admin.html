@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="title">Dados Gerais do Perfil</h2>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'js/delay_error.js' %}"></script>
+    {% endif %}
+
+    <div class="table-container">
+        <table class="table">
+            <thead class="max-table">
+                <tr>                    
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Email</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody class="max-table">
+                <tr>                    
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="{% url 'editar_admin' %}" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody class="min-table">                
+                <tr>
+                    <th>Nome</th>
+                    <td> {{ user.first_name }} </td>
+                </tr>
+                <tr>
+                    <th>Sobrenome</th>
+                    <td> {{ user.last_name }} </td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td> {{ user.email }} </td>
+                </tr>
+                <tr>
+                    <th>Ação</th>
+                    <td><a href="{% url 'editar_admin' %}" title="Editar"><i class="bi bi-pencil"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        </table>
+    </div>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-back">Voltar ao Dashboard</a>
+</div>
+{% endblock %}
