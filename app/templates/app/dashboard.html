@@ -45,13 +45,18 @@
         <div class="col-md-5 mb-3">
             <div class="card shadow p-3">
                 <h5 class="text-center">Salários por Funcionário</h5>
-                <canvas id="graficoSalarios"
-                    data-funcionarios="{{ nomes_funcionarios|join:',' }}"
-                    data-salarios="{{ salarios_funcionarios|join:',' }}">
-                </canvas>
+                <div style="max-height: 300px; overflow-y: auto;">
+                    <ul class="list-group">
+                        {% for nome, salario in funcionarios_salarios %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <strong>{{ nome }}</strong>
+                                <span>R$ {{ salario|floatformat:2 }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>              
 
     <div class="row mt-4 gap-3 justify-content-center">
         <!-- Gráfico de Vendas Mensais -->
