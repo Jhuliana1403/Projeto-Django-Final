@@ -40,14 +40,15 @@ def cadastrar_admin(request):
     if request.method == 'POST':
         form = AdminCreationForm(request.POST)
         if form.is_valid():
-             # Verificar se o e-mail já está cadastrado
-            email = form.cleaned_data['email'].lower()
-            if User.objects.filter(email=email).exists():
-                messages.error(request, "Este e-mail já está cadastrado como administrador.")
-            else:
-                form.save()
-                messages.success(request, "Novo administrador cadastrado com sucesso!")
-                return redirect('cadastrar_admin')  # Redireciona para a mesma página ou outra
+            # Formulário válido, salvar o administrador
+            form.save()
+            messages.success(request, "Novo administrador cadastrado com sucesso!")
+            return redirect('cadastrar_admin')  # Redireciona para o painel do admin ou outra página relevante
+        else:
+            # Exibindo os erros específicos do formulário
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"Erro no campo {field}: {error}")
     else:
         form = AdminCreationForm()
 
