@@ -21,10 +21,59 @@
     
     <form method="post" class="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-            {{ form.as_p }}
+        <div class="mb-3">
+            <label for="id_nome_completo" class="form-label fw-bold d-block">Nome Completo</label>
+            <div class="d-flex justify-content-center">
+                {{ form.nome_completo }}
+            </div>
         </div>
-        <button type="submit" class="btn btn-add">Cadastrar</button>
+
+        <div class="mb-3">
+            <label for="id_email" class="form-label fw-bold d-block">E-mail</label>
+            <div class="d-flex justify-content-center">
+                {{ form.email }}
+            </div>
+        </div>
+
+        <!-- Campo de Senha -->
+        <div class="mb-3">
+            <label for="id_senha" class="form-label fw-bold d-block">Senha</label>
+            <div class="input-group">
+                <input type="password" id="id_senha" name="senha" class="form-control" placeholder="Digite a senha">
+                <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePassword('id_senha')">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            <small class="form-text text-muted">
+                A senha deve conter pelo menos:
+                <ul class="text-muted small mt-1">
+                    <li>Mínimo de 8 caracteres</li>
+                    <li>Pelo menos uma letra</li>
+                    <li>Pelo menos um número</li>
+                </ul>
+            </small>
+        </div>
+
+        <!-- Campo de Confirmação de Senha -->
+        <div class="mb-3">
+            <label for="id_confirmar_senha" class="form-label fw-bold d-block">Confirmar Senha</label>
+            <div class="input-group">
+                <input type="password" id="id_confirmar_senha" name="confirmar_senha" class="form-control" placeholder="Confirme a senha" onkeyup="validatePassword()">
+                <button type="button" class="btn btn-outline-secondary toggle-password" onclick="togglePassword('id_confirmar_senha')">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            <small id="passwordHelp" class="form-text"></small>
+        </div>
+
+        <!-- Botão Centralizado -->
+        <div class="text-center">
+            <button type="submit" id="submitBtn" class="btn btn-dark" disabled>Cadastrar</button>
+        </div>
     </form>
 </div>
 {% endblock %}
+
+{% block js_extra %}
+    <script src="{% static 'js/cadastrar_admin.js' %}"></script>
+{% endblock js_extra %}
