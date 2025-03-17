@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import AdminCreationForm
+import re
 
 # Create your views here.
 
@@ -24,7 +25,8 @@ def index(request):
             request.session.set_expiry(86400)  # Mantém a sessão por 1 dia
             return redirect('dashboard')
         else:
-            return render(request, "login/index.html", {"erro": "Email ou senha incorreto!"})
+            erro_msg = "Email ou senha incorreto!"
+        return render(request, "login/index.html", {"erro": erro_msg})
         
 
 def sair(request):
@@ -65,13 +67,24 @@ def editar_admin(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+
+        # Validação da senha (deve ter pelo menos 8 caracteres, letras e números)
+        if password and not re.match(r'^(?=.*[A-Za-z])(?=.*\d).{8,}$', password):
+            messages.error(request, "A senha deve ter pelo menos 8 caracteres, incluindo letras e números.")
+            return redirect('editar_admin')  # Volta para a página de edição, com a mensagem de erro
+
+        # Verifica se as senhas coincidem
+        if password and password != confirm_password:
+            messages.error(request, "As senhas não coincidem!")
+            return redirect('editar_admin')
 
         # Atualiza os dados do usuário
         user.email = email
         user.first_name = first_name
         user.last_name = last_name
 
-         # Verifica se o e-mail fornecido já está cadastrado em outro usuário
+        # Verifica se o e-mail fornecido já está cadastrado em outro usuário
         if User.objects.filter(email=email).exclude(id=user.id).exists():
             messages.error(request, "Este e-mail já está cadastrado em outro usuário.")
             return redirect('editar_admin')  # Redireciona para a página de edição novamente com a mensagem de erro
