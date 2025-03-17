@@ -736,10 +736,9 @@ def dashboard(request):
     total_pagamentos = Pagamento.objects.aggregate(total=Sum('valor'))['total'] or 0
     total_vendas = Venda.objects.aggregate(total=Sum('valor_total'))['total'] or 0 
 
-    # Dados para o gráfico de salários
-    funcionarios = Funcionario.objects.values('nome', 'salario')
-    nomes_funcionarios = [f['nome'] for f in funcionarios]
-    salarios_funcionarios = [f['salario'] for f in funcionarios]
+    # Dados para exibição de salários 
+    funcionarios_salarios = Funcionario.objects.values_list('nome', 'salario')
+
 
     total_vendas_mes = Venda.objects.filter(
         data_venda__year=ano_atual, 
@@ -778,8 +777,7 @@ def dashboard(request):
         'total_pagamentos': total_pagamentos,
         'total_vendas': total_vendas, 
         'valores_mensais': valores_mensais,
-        'nomes_funcionarios': nomes_funcionarios,
-        'salarios_funcionarios': salarios_funcionarios,
+        'funcionarios_salarios': funcionarios_salarios,  # Adicionado
         'total_vendas_mes': total_vendas_mes,  # Só vendas mensais
         'meses': meses,
         'valores_vendas': valores_vendas,
@@ -851,7 +849,82 @@ def cadastrar_transporte(request):
 
     # Caso o método não seja POST, exibe o formulário para cadastrar transporte
     transportes = Transporte.objects.all()  # Recupera todos os transportes existentes
-    return render(request, "app/cadastrar_transporte.html", {"transportes": transportes})
+    return render(request, "app/cadastrar_transporte.html", {"transportes": transportes})@login_required(login_url='login_index')
+def cadastrar_transporte(request):
+    if request.method == "POST":
+        motorista_id = request.POST.get("motorista")
+        placa = request.POST.get("placa")
+        coleta_quantidade = request.POST.get("coleta_quantidade")
+        destino = request.POST.get("destino")
+        data_envio = request.POST.get("data_envio")
+        status = request.POST.get("status")
+        motivo_atraso = request.POST.get("motivo_atraso", "")
+        feedback_cliente = request.POST.get("feedback_cliente", "")
+
+        # Verifica se o motorista existe
+        try:
+            motorista = Funcionario.objects.get(id=motorista_id)
+        except Funcionario.DoesNotExist:
+            messages.error(request, "Motorista inválido. Selecione um funcionário cadastrado.")
+            return render(request, "app/cadastrar_transporte.html", {
+                "motoristas": Funcionario.objects.all(),
+                "placa": placa,
+                "coleta_quantidade": coleta_quantidade,
+                "destino": destino,
+                "data_envio": data_envio,
+                "status": status,
+                "motivo_atraso": motivo_atraso,
+                "feedback_cliente": feedback_cliente
+            })
+
+        # Verificação para garantir que a placa seja única
+        if Transporte.objects.filter(placa=placa).exists():
+            messages.error(request, "A placa informada já está cadastrada. Insira uma placa única.")
+            return render(request, "app/cadastrar_transporte.html", {
+                "motoristas": Funcionario.objects.all(),
+                "motorista": motorista_id,
+                "placa": placa,
+                "coleta_quantidade": coleta_quantidade,
+                "destino": destino,
+                "data_envio": data_envio,
+                "status": status,
+                "motivo_atraso": motivo_atraso,
+                "feedback_cliente": feedback_cliente
+            })
+
+        # Validação de campos obrigatórios
+        if not motorista or not placa or not coleta_quantidade or not destino or not status:
+            messages.error(request, "Por favor, preencha todos os campos obrigatórios.")
+            return render(request, "app/cadastrar_transporte.html", {
+                "motoristas": Funcionario.objects.all(),
+                "motorista": motorista_id,
+                "placa": placa,
+                "coleta_quantidade": coleta_quantidade,
+                "destino": destino,
+                "data_envio": data_envio,
+                "status": status,
+                "motivo_atraso": motivo_atraso,
+                "feedback_cliente": feedback_cliente
+            })
+
+        # Se tudo estiver correto, cria o transporte
+        transporte = Transporte(
+            motorista=motorista,
+            placa=placa,
+            coleta_quantidade=coleta_quantidade,
+            destino=destino,
+            data_envio=data_envio,
+            status=status,
+            motivo_atraso=motivo_atraso,
+            feedback_cliente=feedback_cliente
+        )
+        transporte.save()
+        return redirect("listar_transporte")
+
+    # Recupera apenas funcionários que são motoristas
+    motoristas = Funcionario.objects.filter(funcao__icontains="motorista")
+    return render(request, "app/cadastrar_transporte.html", {"motoristas": motoristas})
+
 
 
 @login_required(login_url='login_index')
