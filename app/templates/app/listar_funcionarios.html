@@ -24,7 +24,7 @@
                     {% if funcionario.imagem %}
                         <img src="{{ funcionario.imagem.url }}" alt="{{ funcionario.nome }}" class="funcionario-img">
                     {% else %}
-                        <img src="{% static 'images/default-avatar.png' %}" alt="{{ funcionario.nome }}" class="funcionario-img">
+                        <img src="{% static 'img/usuario.png' %}" alt="{{ funcionario.nome }}" class="funcionario-img">
                     {% endif %}
                     <div class="funcionario-info">
                         <h3>{{ funcionario.nome }}</h3>
