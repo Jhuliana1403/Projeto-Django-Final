@@ -8,6 +8,7 @@ Ele reúne funcionalidades para o controle de produtores, clientes, coletas, qua
 
 ## ⚙️ Como Configurar o Projeto
 
+
 ### 🛠️ 1️⃣ **Clonar o repositório**
 ```bash
 git clone https://github.com/Jhuliana1403/Projeto-Django-Final.git
@@ -23,6 +24,7 @@ code .
 ```bash
 python -m venv venv
 venv\Scripts\activate
+```
 
 # No Linux/Mac
 ```bash
