@@ -4,6 +4,8 @@
 {% block content %}
 <div class="container">
     <h2 class="title">Qualidade do Leite</h2>
+
+    <!-- Exibir mensagens de erro ou sucesso -->
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
@@ -12,8 +14,8 @@
             </div>
         {% endfor %}
     </div>
-    <script src="{% static 'js/delay_error.js' %}"></script>
     {% endif %}
+    
     {% if qualidade %}
         <table class="table">
             <thead>

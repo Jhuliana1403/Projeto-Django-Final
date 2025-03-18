@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="{% static 'css/funcionario.css' %}">
 <div class="container">
     <h2 class="title">Funcionários</h2>
+
+    <!-- Exibir mensagens de erro ou sucesso -->
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
@@ -13,8 +15,8 @@
             </div>
         {% endfor %}
     </div>
-    <script src="{% static 'js/delay_error.js' %}"></script>
     {% endif %}
+
     {% if funcionarios %}
         <div class="funcionarios-grid">
             {% for funcionario in funcionarios %}
@@ -22,7 +24,7 @@
                     {% if funcionario.imagem %}
                         <img src="{{ funcionario.imagem.url }}" alt="{{ funcionario.nome }}" class="funcionario-img">
                     {% else %}
-                        <img src="{% static 'images/default-avatar.png' %}" alt="{{ funcionario.nome }}" class="funcionario-img">
+                        <img src="{% static 'img/usuario.png' %}" alt="{{ funcionario.nome }}" class="funcionario-img">
                     {% endif %}
                     <div class="funcionario-info">
                         <h3>{{ funcionario.nome }}</h3>

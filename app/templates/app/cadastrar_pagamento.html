@@ -4,6 +4,7 @@
 {% block content %}
     <div class="form-container">
         <h2 class="form-title">Cadastrar Pagamento</h2>
+
         <!-- Exibir mensagens de erro ou sucesso -->
         {% if messages %}
         <div class="messages">
@@ -13,7 +14,6 @@
                 </div>
             {% endfor %}
         </div>
-        <script src="{% static 'js/delay_error.js' %}"></script>
         {% endif %}
 
         <form method="POST">
