@@ -4,7 +4,8 @@
 {% block content %}
     <div class="form-container">
         <h2 class="form-title">Editar Funcionário</h2>
-      
+        
+        <!-- Exibir mensagens de erro ou sucesso -->
         {% if messages %}
         <div class="messages">
             {% for message in messages %}
@@ -13,7 +14,6 @@
                 </div>
             {% endfor %}
         </div>
-        <script src="{% static 'js/delay_error.js' %}"></script>
         {% endif %}
 
         <form method="POST" enctype="multipart/form-data">

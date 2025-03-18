@@ -5,6 +5,7 @@
 <div class="container">
     <h2 class="title">Vendas</h2>
 
+    <!-- Exibir mensagens de erro ou sucesso -->
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
@@ -13,8 +14,8 @@
             </div>
         {% endfor %}
     </div>
-    <script src="{% static 'js/delay_error.js' %}"></script>
     {% endif %}
+
     {% if vendas %}
         <table class="table">
             <thead>

@@ -3,7 +3,9 @@
 
 {% block content %}
     <div class="form-container">
-        <h2 class="form-title">Editar Pagamento</h2>
+        <h2 class="form-title text-center">Editar Pagamento</h2>
+        
+        <!-- Exibir mensagens de erro ou sucesso -->
         {% if messages %}
         <div class="messages">
             {% for message in messages %}
@@ -12,8 +14,8 @@
                 </div>
             {% endfor %}
         </div>
-        <script src="{% static 'js/delay_error.js' %}"></script>
         {% endif %}
+        
         <form method="POST">
         {% csrf_token %}
         <div class="form-group">
@@ -40,7 +42,7 @@
             </select>
         </div>
         
-        <button type="submit" class="btn-submit">Salvar Alterações</button>
+        <button type="submit" class="btn btn-add">Salvar Alterações</button>
         </form>
     </div>
 {% endblock %}
