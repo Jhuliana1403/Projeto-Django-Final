@@ -13,6 +13,7 @@ Ele reúne funcionalidades para o controle de produtores, clientes, coletas, qua
 git clone https://github.com/Jhuliana1403/Projeto-Django-Final.git
 cd Projeto-Django_final
 code .
+```
 
 ---
 
@@ -27,12 +28,14 @@ venv\Scripts\activate
 ```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
 ---
 
 ### 📦 3️⃣ Instalar as dependências
 ```bash
 pip install -r requirements.txt
+```
 
 ---
 
@@ -46,3 +49,4 @@ senha: bojela26404
 ### 🚀 5️⃣ Executar o servidor 
 ```bash
 python manage.py runserver
+```
