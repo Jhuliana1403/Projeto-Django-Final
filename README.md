@@ -20,13 +20,13 @@ code .
 
 ### 🌍 2️⃣ Crie um ambiente virtual e ativá-lo
 
-# No Windows (cmd)
+#### No Windows (cmd)
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-# No Linux/Mac
+#### No Linux/Mac
 ```bash
 python3 -m venv venv
 source venv/bin/activate
