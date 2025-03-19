@@ -39,14 +39,14 @@ pip install -r requirements.txt
 
 ---
 
-### 🚀 5️⃣ Executar o servidor 
+### 🚀 4️⃣ Executar o servidor 
 ```bash
 python manage.py runserver
 ```
 
 ---
 
-### 🔑 4️⃣ Credenciais de Acesso Padrão (Para Testes)
+### 🔑 5️⃣ Credenciais de Acesso Padrão (Para Testes)
 #### Administrador Padrão
 ##### E-mail: admin@ifbaiano.edu.br
 ##### Senha: bojela26404
