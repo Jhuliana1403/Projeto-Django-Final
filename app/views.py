@@ -792,66 +792,6 @@ def listar_transporte(request):
 @login_required(login_url='login_index')
 def cadastrar_transporte(request):
     if request.method == "POST":
-        motorista = request.POST.get("motorista")
-        placa = request.POST.get("placa")
-        coleta_quantidade = request.POST.get("coleta_quantidade")
-        destino = request.POST.get("destino")
-        data_envio = request.POST.get("data_envio")
-        status = request.POST.get("status")
-        motivo_atraso = request.POST.get("motivo_atraso", "")
-        feedback_cliente = request.POST.get("feedback_cliente", "")
-
-        # Verificação para garantir que a placa seja única
-        if Transporte.objects.filter(placa=placa).exists():
-            messages.error(request, "A placa informada já está cadastrada. Por favor, insira uma placa única.")
-            transportes = Transporte.objects.all()  # Recupera os transportes já cadastrados
-            return render(request, "app/cadastrar_transporte.html", {
-                "transportes": transportes,
-                "motorista": motorista,
-                "placa": placa,
-                "coleta_quantidade": coleta_quantidade,
-                "destino": destino,
-                "data_envio": data_envio,
-                "status": status,
-                "motivo_atraso": motivo_atraso,
-                "feedback_cliente": feedback_cliente
-            })
-
-        # Validação de campos obrigatórios
-        if not motorista or not placa or not coleta_quantidade or not destino or not status:
-            messages.error(request, "Por favor, preencha todos os campos obrigatórios.")
-            transportes = Transporte.objects.all()  # Recupera os transportes já cadastrados
-            return render(request, "app/cadastrar_transporte.html", {
-                "transportes": transportes,
-                "motorista": motorista,
-                "placa": placa,
-                "coleta_quantidade": coleta_quantidade,
-                "destino": destino,
-                "data_envio": data_envio,
-                "status": status,
-                "motivo_atraso": motivo_atraso,
-                "feedback_cliente": feedback_cliente
-            })
-
-        # Se todos os campos obrigatórios estão preenchidos, cria o transporte
-        transporte = Transporte(
-            motorista=motorista,
-            placa=placa,
-            coleta_quantidade=coleta_quantidade,
-            destino=destino,
-            data_envio=data_envio,
-            status=status,
-            motivo_atraso=motivo_atraso,
-            feedback_cliente=feedback_cliente
-        )
-        transporte.save()
-        return redirect("listar_transporte")
-
-    # Caso o método não seja POST, exibe o formulário para cadastrar transporte
-    transportes = Transporte.objects.all()  # Recupera todos os transportes existentes
-    return render(request, "app/cadastrar_transporte.html", {"transportes": transportes})@login_required(login_url='login_index')
-def cadastrar_transporte(request):
-    if request.method == "POST":
         motorista_id = request.POST.get("motorista")
         placa = request.POST.get("placa")
         coleta_quantidade = request.POST.get("coleta_quantidade")
@@ -926,37 +866,69 @@ def cadastrar_transporte(request):
     return render(request, "app/cadastrar_transporte.html", {"motoristas": motoristas})
 
 
-
 @login_required(login_url='login_index')
 def editar_transporte(request, transporte_id):
     transporte = get_object_or_404(Transporte, id=transporte_id)
-
+    
     if request.method == "POST":
-        # Pegando os valores do formulário
-        motorista = request.POST.get("motorista", transporte.motorista)
-        placa = request.POST.get("placa", transporte.placa)
-        coleta_quantidade = request.POST.get("coleta_quantidade", transporte.coleta_quantidade)
-        destino = request.POST.get("destino", transporte.destino)
+        motorista_id = request.POST.get("motorista")
+        placa = request.POST.get("placa")
+        coleta_quantidade = request.POST.get("coleta_quantidade")
+        destino = request.POST.get("destino")
         data_envio = request.POST.get("data_envio")
-        status = request.POST.get("status", transporte.status)
-        motivo_atraso = request.POST.get("motivo_atraso", transporte.motivo_atraso)
-        feedback_cliente = request.POST.get("feedback_cliente", transporte.feedback_cliente)
-
-        # Validação: Verificar se campos obrigatórios estão vazios
-        if not motorista or not placa or not destino or not data_envio:
-            messages.error(request, "Os campos 'Motorista', 'Placa', 'Destino' e 'Data de Envio' são obrigatórios.")
-            return render(request, "app/editar_transporte.html", {"transporte": transporte})
-
-        # Validação: Verificar se o campo 'coleta_quantidade' é um número decimal
-        if coleta_quantidade:
-            try:
-                coleta_quantidade = float(coleta_quantidade)  # Tenta converter para decimal
-            except ValueError:
-                messages.error(request, "O campo 'Coleta' deve ser um número decimal válido.")
-                return render(request, "app/editar_transporte.html", {"transporte": transporte})
-        else:
-            coleta_quantidade = 0  # Definindo um valor padrão caso o campo esteja vazio
-
+        status = request.POST.get("status")
+        motivo_atraso = request.POST.get("motivo_atraso", "")
+        feedback_cliente = request.POST.get("feedback_cliente", "")
+        
+        # Verifica se o motorista existe
+        try:
+            motorista = Funcionario.objects.get(id=motorista_id)
+        except Funcionario.DoesNotExist:
+            messages.error(request, "Motorista inválido. Selecione um funcionário cadastrado.")
+            return render(request, "app/editar_transporte.html", {
+                "transporte": transporte,
+                "motoristas": Funcionario.objects.all(),
+                "placa": placa,
+                "coleta_quantidade": coleta_quantidade,
+                "destino": destino,
+                "data_envio": data_envio,
+                "status": status,
+                "motivo_atraso": motivo_atraso,
+                "feedback_cliente": feedback_cliente
+            })
+        
+        # Verificação para garantir que a placa seja única (exceto para o próprio transporte)
+        if Transporte.objects.filter(placa=placa).exclude(id=transporte_id).exists():
+            messages.error(request, "A placa informada já está cadastrada em outro transporte. Insira uma placa única.")
+            return render(request, "app/editar_transporte.html", {
+                "transporte": transporte,
+                "motoristas": Funcionario.objects.all(),
+                "motorista": motorista_id,
+                "placa": placa,
+                "coleta_quantidade": coleta_quantidade,
+                "destino": destino,
+                "data_envio": data_envio,
+                "status": status,
+                "motivo_atraso": motivo_atraso,
+                "feedback_cliente": feedback_cliente
+            })
+        
+        # Validação de campos obrigatórios
+        if not motorista or not placa or not coleta_quantidade or not destino or not status:
+            messages.error(request, "Por favor, preencha todos os campos obrigatórios.")
+            return render(request, "app/editar_transporte.html", {
+                "transporte": transporte,
+                "motoristas": Funcionario.objects.all(),
+                "motorista": motorista_id,
+                "placa": placa,
+                "coleta_quantidade": coleta_quantidade,
+                "destino": destino,
+                "data_envio": data_envio,
+                "status": status,
+                "motivo_atraso": motivo_atraso,
+                "feedback_cliente": feedback_cliente
+            })
+        
         # Atualizando os valores no transporte
         transporte.motorista = motorista
         transporte.placa = placa
@@ -966,13 +938,15 @@ def editar_transporte(request, transporte_id):
         transporte.status = status
         transporte.motivo_atraso = motivo_atraso
         transporte.feedback_cliente = feedback_cliente
-
-        # Salvando o transporte
+        
         transporte.save()
         messages.success(request, "Transporte atualizado com sucesso!")
-        return redirect("listar_transporte")  # Redireciona após salvar
+        return redirect("listar_transporte")
+    
+    # Recupera apenas funcionários que são motoristas
+    motoristas = Funcionario.objects.filter(funcao__icontains="motorista")
+    return render(request, "app/editar_transporte.html", {"transporte": transporte, "motoristas": motoristas})
 
-    return render(request, "app/editar_transporte.html", {"transporte": transporte})
 
 @login_required(login_url='login_index')
 def excluir_transporte(request, transporte_id):
