@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="form-container">
-        <h2 class="form-title">Cadastrar Produtor</h2>
+        <h2 class="form-title text-center">Cadastrar Produtor</h2>
 
         <!-- Exibir mensagens de erro ou sucesso -->
         {% if messages %}
@@ -31,7 +31,7 @@
             <label for="telefone">Telefone:</label>
             <input type="number" id="telefone" name="telefone" class="form-control input-large" placeholder="Digite o telefone" value="{{ telefone|default_if_none:'' }}">
         </div>
-        <button type="submit" class="btn-submit">Cadastrar Produtor</button>
+        <button type="submit" class="btn btn-add">Cadastrar Produtor</button>
         </form>
     </div>
 {% endblock %}

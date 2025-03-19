@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div class="form-container">
-    <h2 class="form-title">Editar Venda</h2>
+    <h2 class="form-title text-center">Editar Venda</h2>
 
     <!-- Exibição de mensagens de erro ou sucesso -->
     {% if messages %}
@@ -37,12 +37,9 @@
                 value="{{ request.POST.quantidade_litros|default:venda.quantidade_litros }}">
 
             <label>Valor Total:</label>
-            <input type="number" step="0.01" name="valor_total" class="form-control" 
-                    value="{{ request.POST.valor_total|default:venda.valor_total }}">
-            
-
+            <input type="number" step="0.01" name="valor_total" class="form-control" value="{{ request.POST.valor_total|default:venda.valor_total }}">
         </div>
-        <button type="submit" class="btn-submit">Salvar</button>
+        <button type="submit" class="btn btn-add">Salvar</button>
     </form>
 </div>
 {% endblock %}
