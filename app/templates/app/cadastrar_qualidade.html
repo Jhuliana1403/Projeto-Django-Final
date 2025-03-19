@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="form-container">
-        <h2 class="form-title">Cadastrar Qualidade</h2>
+        <h2 class="form-title text-center">Cadastrar Qualidade</h2>
 
         <!-- Exibir mensagens de erro ou sucesso -->
         {% if messages %}
@@ -17,52 +17,51 @@
         {% endif %}
 
         <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="produtor">Produtor:</label>
-            <select id="produtor" name="produtor" class="form-control input-large">
-                <option value="">Selecione um produtor</option>
-                {% for produtor in produtores %}
-                    <option value="{{ produtor.id }}" {% if request.POST.produtor == produtor.id|stringformat:"s" %}selected{% endif %}>
-                        {{ produtor.nome }}
-                    </option>
-                {% endfor %}
-            </select>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="produtor">Produtor:</label>
+                <select id="produtor" name="produtor" class="form-control input-large">
+                    <option value="">Selecione um produtor</option>
+                    {% for produtor in produtores %}
+                        <option value="{{ produtor.id }}" {% if request.POST.produtor == produtor.id|stringformat:"s" %}selected{% endif %}>
+                            {{ produtor.nome }}
+                        </option>
+                    {% endfor %}
+                </select>
 
-            <label for="coleta">Coleta:</label>
-            <select id="coleta" name="coleta">
-                <option value="">Selecione a Coleta</option>
-                {% for coleta in coletas %}
-                    <option value="{{ coleta.id }}" {% if request.POST.coleta == coleta.id|stringformat:"s" %}selected{% endif %}>
-                        {{ coleta.quantidade_litros }}
-                    </option>
-                {% endfor %}
-            </select>
+                <label for="coleta">Coleta:</label>
+                <select id="coleta" name="coleta">
+                    <option value="">Selecione a Coleta</option>
+                    {% for coleta in coletas %}
+                        <option value="{{ coleta.id }}" {% if request.POST.coleta == coleta.id|stringformat:"s" %}selected{% endif %}>
+                            {{ coleta.quantidade_litros }}
+                        </option>
+                    {% endfor %}
+                </select>
 
-            <label for="gordura">Gordura:</label>
-            <input type="number" id="gordura" name="gordura" class="form-control input-large"
-                placeholder="Digite a porcentagem de gordura" step="0.01"
-                value="{{ request.POST.gordura }}">
+                <label for="gordura">Gordura:</label>
+                <input type="number" id="gordura" name="gordura" class="form-control input-large"
+                    placeholder="Digite a porcentagem de gordura" step="0.01"
+                    value="{{ request.POST.gordura }}">
 
-            <label for="proteina">Proteína:</label>
-            <input type="number" id="proteina" name="proteina" class="form-control input-large"
-                placeholder="Digite a porcentagem de proteína" step="0.01"
-                value="{{ request.POST.proteina }}">
+                <label for="proteina">Proteína:</label>
+                <input type="number" id="proteina" name="proteina" class="form-control input-large"
+                    placeholder="Digite a porcentagem de proteína" step="0.01"
+                    value="{{ request.POST.proteina }}">
 
-            <label for="contagem_bacteriana">Contagem Bacteriana:</label>
-            <input type="number" id="contagem_bacteriana" name="contagem_bacteriana"
-                placeholder="Digite a porcentagem de qualidade" class="form-control"
-                value="{{ request.POST.contagem_bacteriana }}">
+                <label for="contagem_bacteriana">Contagem Bacteriana:</label>
+                <input type="number" id="contagem_bacteriana" name="contagem_bacteriana"
+                    placeholder="Digite a porcentagem de qualidade" class="form-control"
+                    value="{{ request.POST.contagem_bacteriana }}">
 
-            <label for="status">Status:</label>
-            <select id="status" name="status" class="form-control input-large">
-                <option value="">Selecione o Status:</option>
-                <option value="Aprovado" {% if request.POST.status == "Aprovado" %}selected{% endif %}>Aprovado</option>
-                <option value="Reprovado" {% if request.POST.status == "Reprovado" %}selected{% endif %}>Reprovado</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn-submit">Cadastrar Qualidade</button>
+                <label for="status">Status:</label>
+                <select id="status" name="status" class="form-control input-large">
+                    <option value="">Selecione o Status:</option>
+                    <option value="Aprovado" {% if request.POST.status == "Aprovado" %}selected{% endif %}>Aprovado</option>
+                    <option value="Reprovado" {% if request.POST.status == "Reprovado" %}selected{% endif %}>Reprovado</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-add">Cadastrar Qualidade</button>
         </form>
     </div>
 {% endblock %}

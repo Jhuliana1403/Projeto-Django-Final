@@ -3,9 +3,9 @@
 
 {% block content %}
   <div class="form-container">
-    <h2 class="form-title">Cadastrar Coleta</h2>
+    <h2 class="form-title text-center">Cadastrar Coleta</h2>
 
-    
+    <!-- Exibir mensagens de erro ou sucesso -->
     {% if messages %}
       <div class="messages">
         {% for message in messages %}
@@ -36,7 +36,7 @@
         <input type="number" id="quantidade_litros" name="quantidade_litros" class="form-control input-large" placeholder="Digite a quantidade por litros" step="0.01">
       </div>
         
-      <button type="submit" class="btn-submit">Cadastrar Coleta</button>
+      <button type="submit" class="btn btn-add">Cadastrar Coleta</button>
     </form>
   </div>
 {% endblock %}
