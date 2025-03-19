@@ -1,8 +1,6 @@
 # 📌 Projeto Django - Sistema AgroVida 🌱🐄
 
-O Sistema AgroVida, desenvolvido para a disciplina de Web II, é uma plataforma em Django que otimiza a administração de empresas rurais, especialmente do setor leiteiro.
-
-Ele reúne funcionalidades para o controle de produtores, clientes, coletas, qualidade do leite, pagamentos, funcionários, vendas e transporte, garantindo uma gestão integrada e eficiente.
+O Sistema AgroVida, desenvolvido para a disciplina de Web II, é uma plataforma em Django que otimiza a administração de empresas rurais, especialmente do setor leiteiro. Ele reúne funcionalidades para o controle de produtores, clientes, coletas, qualidade do leite, pagamentos, funcionários, vendas e transporte, garantindo uma gestão integrada.
 
 ---
 
