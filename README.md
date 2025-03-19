@@ -42,9 +42,9 @@ pip install -r requirements.txt
 ---
 
 ### 🔑 4️⃣ Credenciais de Acesso Padrão (Para Testes)
-[Administrador Padrão]
+Administrador Padrão
 E-mail: admin@ifbaiano.edu.br
-senha: bojela26404
+Senha: bojela26404
 
 ---
 
