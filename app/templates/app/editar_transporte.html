@@ -19,7 +19,14 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="motorista">Motorista:</label>
-                <input type="text" id="motorista" name="motorista" class="form-control input-large" value="{{ transporte.motorista }}" placeholder="Digite o nome do motorista">
+                <select id="motorista" name="motorista" class="form-control">
+                    <option value="">Selecione um motorista</option>
+                    {% for funcionario in motoristas %}
+                        <option value="{{ funcionario.id }}" {% if funcionario.id|stringformat:"s" == request.POST.motorista %}selected{% endif %}>
+                            {{ funcionario.nome }}
+                        </option>
+                    {% endfor %}
+                </select>
 
                 <label for="placa">Placa:</label>
                 <input type="text" id="placa" name="placa" class="form-control input-large" value="{{ transporte.placa }}" placeholder="Digite a placa do veículo">
